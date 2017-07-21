@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>KVC集合操作符 | 美团MOMA团队</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="第一次遇到是在阅读AFNetworking中NSURLSession部分代码的时候：
+1- (NSArray *)tasksForKeyPath:(NSString *)keyPath &amp;#123;&amp;#10; &amp;#10;    __block NSArray *tasks = nil;&amp;#10; &amp;#10;    dispatch_semaphore_t semaphore = dispatch_">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KVC集合操作符">
+<meta property="og:url" content="http://yoursite.com/2016/01/25/KVC集合操作符/index.html">
+<meta property="og:site_name" content="美团MOMA团队">
+<meta property="og:description" content="第一次遇到是在阅读AFNetworking中NSURLSession部分代码的时候：
+1- (NSArray *)tasksForKeyPath:(NSString *)keyPath &amp;#123;&amp;#10; &amp;#10;    __block NSArray *tasks = nil;&amp;#10; &amp;#10;    dispatch_semaphore_t semaphore = dispatch_">
+<meta property="og:updated_time" content="2017-07-21T08:33:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="KVC集合操作符">
+<meta name="twitter:description" content="第一次遇到是在阅读AFNetworking中NSURLSession部分代码的时候：
+1- (NSArray *)tasksForKeyPath:(NSString *)keyPath &amp;#123;&amp;#10; &amp;#10;    __block NSArray *tasks = nil;&amp;#10; &amp;#10;    dispatch_semaphore_t semaphore = dispatch_">
+  
+    <link rel="alternative" href="/atom.xml" title="美团MOMA团队" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/pics/icon.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">MOMA</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">美团CRM移动端团队技术博客</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>標籤</li>
+						
+						
+						<li>關於</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/iOS">iOS</a></li>
+				        
+							<li><a href="/#">android</a></li>
+				        
+							<li><a href="/#">javaScript</a></li>
+				        
+							<li><a href="/tags/RN">RN</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/RN/" style="font-size: 10px;">RN</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">美团CRM移动端团队技术博客</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">MOMA</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/pics/icon.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">MOMA</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">美团CRM移动端团队技术博客</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/iOS">iOS</a></li>
+		        
+					<li><a href="/#">android</a></li>
+		        
+					<li><a href="/#">javaScript</a></li>
+		        
+					<li><a href="/tags/RN">RN</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-KVC集合操作符" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/25/KVC集合操作符/" class="article-date">
+  	<time datetime="2016-01-25T08:38:24.000Z" itemprop="datePublished">2016-01-25</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      KVC集合操作符
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/郑智文/">郑智文</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>第一次遇到是在阅读AFNetworking中NSURLSession部分代码的时候：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (NSArray *)tasksForKeyPath:(NSString *)keyPath &#123;&#10; &#10;    __block NSArray *tasks = nil;&#10; &#10;    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);&#10; &#10;    [self.session getTasksWithCompletionHandler:^(NSArray *dataTasks,&#10;     NSArray *uploadTasks, NSArray *downloadTasks) &#123;&#10; &#10;        if ([keyPath isEqualToString:NSStringFromSelector(@selector(dataTasks))&#10;        ]) &#123;&#10; &#10;            tasks = dataTasks;&#10; &#10;        &#125; else if ([keyPath isEqualToString:NSStringFromSelector(@selector(&#10;            uploadTasks))]) &#123;&#10; &#10;            tasks = uploadTasks;&#10; &#10;        &#125; else if ([keyPath isEqualToString:NSStringFromSelector(@selector(&#10;            downloadTasks))]) &#123;&#10; &#10;            tasks = downloadTasks;&#10; &#10;        &#125; else if ([keyPath isEqualToString:NSStringFromSelector(@selector(&#10;            tasks))]) &#123;&#10;             &#10;            //dataTasks, uploadTasks, downloadTasks &#37117;&#26159;&#25968;&#32452;&#65292;&#30456;&#24403;&#20110;&#25171;&#24179;&#25968;&#32452;&#65292;&#36820;&#22238;&#19968;&#20010;&#21253;&#21547;&#23376;&#25968;&#32452;&#21508;&#20803;&#32032;&#30340;&#25968;&#32452;&#12290;&#10;            tasks = [@[dataTasks, uploadTasks, downloadTasks] valueForKeyPath:&#10;            @&#34;@unionOfArrays.self&#34;];&#10;        &#125;&#10;        dispatch_semaphore_signal(semaphore);&#10;    &#125;];&#10;    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);&#10;    return tasks;&#10; &#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>KVC集合运算符允许以key path符号在一个集合中执行方法，以@开头表示一个特定的集合方法。键值编码会在必要的时候把基本数据类型进行装箱或者拆箱</p>
+<p>它主要分为3类：1.简单集合操作符 2.对象操作符 3.数组和集合操作符</p>
+<a id="more"></a> 
+<h2 id="u7B80_u5355_u96C6_u5408_u64CD_u4F5C_u7B26"><a href="#u7B80_u5355_u96C6_u5408_u64CD_u4F5C_u7B26" class="headerlink" title="简单集合操作符"></a>简单集合操作符</h2><p>返回string，number等</p>
+<p>@max/@min : 获得数组中最大(或者最小)的一个元素，元素内部要支持能够相互比较。这个好像只能是数值类型，系统并没有类似compare的方法，只有isEqual，但是并不是排序用的。</p>
+<p>@avg ： 将集合中对象转换成double类型，返回数组中指定的平均值的number对象</p>
+<p>@sum ：将集合中每个对象都转换成double类型，然后计算总和，最后返回一个值为这个总和的NSNumber对象</p>
+<p>@count：返回集合中对象总数的NSNumber对象</p>
+<p>例子：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[products valueForKeyPath:@&#34;@count&#34;];&#10;[products valueForKeyPath:@&#34;@sum.price&#34;];&#10;[products valueForKeyPath:@&#34;@avg.price&#34;];&#10;[products valueForKeyPath:@&#34;@max.price&#34;];&#10;[products valueForKeyPath:@&#34;@min.launchedOn&#34;];</span><br></pre></td></tr></table></figure>
+<h2 id="u5BF9_u8C61_u64CD_u4F5C_u7B26"><a href="#u5BF9_u8C61_u64CD_u4F5C_u7B26" class="headerlink" title="对象操作符"></a>对象操作符</h2><p>@unionOfObjects/@distincUnionOfObjects 返回一个由操作符右边的key path指定的对象属性组成的数组，distincUnionOfObjects会对数组去重。</p>
+<p>例子：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[inventory valueForKeyPath:@&#34;@unionOfObjects.name&#34;];&#10;[inventory valueForKeyPath:@&#34;@distinctUnionOfObjects.name&#34;];</span><br></pre></td></tr></table></figure>
+<p>数组和集合操作符</p>
+<p>@distinctUnionOfArrays/@unionOfArrays 返回一个数组，其中包含这个这个数组中每个子数组对于这个操作符号右边指定的key path进行操作之后的值。</p>
+<p>经常会使用 array unionOfArrays 来打平多维数组。</p>
+<p>@distinctUnionOfSets 和@distinctUnionOfArrays类似，因为NSSet中是没有重复的值，所以只有distinct操作</p>
+<p>利用这些操作，有时候可以避免无聊和重复的循环，代码也简洁了很多。</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/25/ReactiveCocoa1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          ReactiveCocoa1
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/25/AFNetworking源码解析1/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">AFNetworking源码解析1</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="KVC集合操作符" data-title="KVC集合操作符" data-url="http://yoursite.com/2016/01/25/KVC集合操作符/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 MOMA
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

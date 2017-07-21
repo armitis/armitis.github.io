@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>ReactiveCocoa1 | 美团MOMA团队</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="RACSignalRAC中统一的数据接口，控件的事件，包括KVO，timer都可以转化成RACSignal。
+创建：
+  1.RAC未控件的一部分原来的事件都通过Category的方式定义了event对应的signal，只需要直接拿来使用就好了。
+  2.自己创建
+1+ (RACSignal *)createSignal:(RACDisposable * (^)(id&amp;#60;RACSubscri">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ReactiveCocoa1">
+<meta property="og:url" content="http://yoursite.com/2016/01/25/ReactiveCocoa1/index.html">
+<meta property="og:site_name" content="美团MOMA团队">
+<meta property="og:description" content="RACSignalRAC中统一的数据接口，控件的事件，包括KVO，timer都可以转化成RACSignal。
+创建：
+  1.RAC未控件的一部分原来的事件都通过Category的方式定义了event对应的signal，只需要直接拿来使用就好了。
+  2.自己创建
+1+ (RACSignal *)createSignal:(RACDisposable * (^)(id&amp;#60;RACSubscri">
+<meta property="og:image" content="http://7xqgnx.com1.z0.glb.clouddn.com/RAC1.png">
+<meta property="og:image" content="http://7xqgnx.com1.z0.glb.clouddn.com/RAC3.png">
+<meta property="og:image" content="http://7xqgnx.com1.z0.glb.clouddn.com/RAC4.png">
+<meta property="og:image" content="http://7xqgnx.com1.z0.glb.clouddn.com/RAC5.png">
+<meta property="og:image" content="http://7xqgnx.com1.z0.glb.clouddn.com/RAC6.png">
+<meta property="og:updated_time" content="2017-07-21T08:33:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ReactiveCocoa1">
+<meta name="twitter:description" content="RACSignalRAC中统一的数据接口，控件的事件，包括KVO，timer都可以转化成RACSignal。
+创建：
+  1.RAC未控件的一部分原来的事件都通过Category的方式定义了event对应的signal，只需要直接拿来使用就好了。
+  2.自己创建
+1+ (RACSignal *)createSignal:(RACDisposable * (^)(id&amp;#60;RACSubscri">
+  
+    <link rel="alternative" href="/atom.xml" title="美团MOMA团队" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/pics/icon.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">MOMA</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">美团CRM移动端团队技术博客</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>標籤</li>
+						
+						
+						<li>關於</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/iOS">iOS</a></li>
+				        
+							<li><a href="/#">android</a></li>
+				        
+							<li><a href="/#">javaScript</a></li>
+				        
+							<li><a href="/tags/RN">RN</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/RN/" style="font-size: 10px;">RN</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">美团CRM移动端团队技术博客</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">MOMA</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/pics/icon.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">MOMA</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">美团CRM移动端团队技术博客</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/iOS">iOS</a></li>
+		        
+					<li><a href="/#">android</a></li>
+		        
+					<li><a href="/#">javaScript</a></li>
+		        
+					<li><a href="/tags/RN">RN</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-ReactiveCocoa1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/25/ReactiveCocoa1/" class="article-date">
+  	<time datetime="2016-01-25T08:38:24.000Z" itemprop="datePublished">2016-01-25</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ReactiveCocoa1
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/郑智文/">郑智文</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="RACSignal"><a href="#RACSignal" class="headerlink" title="RACSignal"></a>RACSignal</h2><p>RAC中统一的数据接口，控件的事件，包括KVO，timer都可以转化成RACSignal。</p>
+<p>创建：</p>
+<p>  1.RAC未控件的一部分原来的事件都通过Category的方式定义了event对应的signal，只需要直接拿来使用就好了。</p>
+<p>  2.自己创建</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ (RACSignal *)createSignal:(RACDisposable * (^)(id&#60;RACSubscriber&#62; subscriber))&#10;didSubscribe;</span><br></pre></td></tr></table></figure>
+<p>​     3.订阅</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[self.usernameTextField.rac_textSignal subscribeNext:^(id x) &#123;&#10;  NSLog(@&#34;%@&#34;, x);&#10;&#125;];</span><br></pre></td></tr></table></figure>
+<p> 在信号创建的时候，需要传入一个didSubscribe的block，在有其他订阅者订阅这个信号的时候，didSubscribe就会被调用，然后将数据通过subscribeNext的block传入。</p>
+<h2 id="u4FE1_u53F7_u4E8B_u4EF6_u7684_u79CD_u7C7B"><a href="#u4FE1_u53F7_u4E8B_u4EF6_u7684_u79CD_u7C7B" class="headerlink" title="信号事件的种类"></a>信号事件的种类</h2><p>1.next，一般情况下，信号处理业务逻辑正常返回的时候，会调用订阅者的sendNext方法将数据传入订阅者，订阅者可以通过过subscribeNext获取数据。</p>
+<p>2.error，有时候业务逻辑产生异常的时候，会调用订阅者的sendError方法来告知订阅者产生了异常，订阅者在subscribeNext:erro:中处理异常错误。</p>
+<p>3.completed，该事件表示订阅者从信号中移除，之后不再收到消息了，信号生命周期结束。</p>
+<p><strong>创建一个请求账号权限的信号</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (RACSignal *)requestAccessToTwitterSignal &#123;&#10;  &#10;  // 1 - define an error&#10;  NSError *accessError = [NSError errorWithDomain:RWTwitterInstantDomain&#10;                                             code:&#10;                                             RWTwitterInstantErrorAccessDenied&#10;                                         userInfo:nil];&#10;  &#10;  // 2 - create the signal&#10;  @weakify(self)&#10;  return [RACSignal createSignal:^RACDisposable *(id&#60;RACSubscriber&#62; subscriber) &#123;&#10;    // 3 - request access to twitter&#10;    @strongify(self)&#10;    [self.accountStore&#10;       requestAccessToAccountsWithType:self.twitterAccountType&#10;         options:nil&#10;      completion:^(BOOL granted, NSError *error) &#123;&#10;          // 4 - handle the response&#10;          if (!granted) &#123;&#10;            [subscriber sendError:accessError];&#10;          &#125; else &#123;&#10;            [subscriber sendNext:nil];&#10;            [subscriber sendCompleted];&#10;          &#125;&#10;        &#125;];&#10;    return nil;&#10;  &#125;];&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>处理请求账号权限的信号</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[self requestAccessToTwitterSignal]&#10;  subscribeNext:^(id x) &#123;&#10;    NSLog(@&#34;Access granted&#34;);&#10;  &#125; error:^(NSError *error) &#123;&#10;    NSLog(@&#34;An error occurred: %@&#34;, error);&#10;  &#125;];</span><br></pre></td></tr></table></figure>
+<h2 id="u4FE1_u53F7_u7684_u51E0_u79CD_u64CD_u4F5C"><a href="#u4FE1_u53F7_u7684_u51E0_u79CD_u64CD_u4F5C" class="headerlink" title="信号的几种操作"></a>信号的几种操作</h2><h3 id="filter"><a href="#filter" class="headerlink" title="filter"></a>filter</h3><p>将信号过滤，只保留满足block中条件的信号</p>
+<p><strong>只保留输入字符串长度大于3的信号</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[self.usernameTextField.rac_textSignal&#10;  filter:^BOOL(id value) &#123;&#10;    NSString *text = value;&#10;    return text.length &#62; 3;&#10;  &#125;]&#10;  subscribeNext:^(id x) &#123;&#10;//&#36825;&#37324;&#21482;&#20250;&#26174;&#31034;&#38271;&#24230;&#22823;&#20110;3&#30340;&#23383;&#31526;&#20018;&#10;    NSLog(@&#34;%@&#34;, x);&#10;  &#125;];</span><br></pre></td></tr></table></figure>
+<p>这里的信号先经过filter过滤了一次，再由subscribeNext得到过滤的信号进行处理，其数据流如下图所示：</p>
+<p><img src="http://7xqgnx.com1.z0.glb.clouddn.com/RAC1.png" alt=""></p>
+<h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><p>把源信号的值映射成一个新的值</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[[self.usernameTextField.rac_textSignal&#10;  map:^id(NSString *text) &#123;&#10;    return @(text.length);&#10;  &#125;]&#10;  filter:^BOOL(NSNumber *length) &#123;&#10;    return [length integerValue] &#62; 3;&#10;  &#125;]&#10;  subscribeNext:^(id x) &#123;&#10;    NSLog(@&#34;%@&#34;, x);&#10;  &#125;];</span><br></pre></td></tr></table></figure>
+<p>信号先经过map映射将字符串转化成功了字符串长度的数据，再通过filter过滤掉了字符串长度等于3的信号，最后通过subscribeNext获得最后符合条件的信号，整个过程包含了不同数据类型的变化，过程如下图：</p>
+<p><a href="http://7xqgnx.com1.z0.glb.clouddn.com/RAC2.png" target="_blank" rel="external">http://7xqgnx.com1.z0.glb.clouddn.com/RAC2.png</a></p>
+<h3 id="combineLatest"><a href="#combineLatest" class="headerlink" title="combineLatest"></a>combineLatest</h3><p>将多个信号合并起来，每一个被合并的信号必须调用过一次sendNext，才能触发合并的信号，最后以元组的形式发出。</p>
+<h3 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h3><p>当信号发出的内容是元组时，可以使用它将元组聚合成一个值。</p>
+<p>将对姓名和密码的验证结果的两种信合合并成一个信号，再通过reduce返回最终是否验证通过的信号。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RACSignal *signUpActiveSignal =&#10;  [RACSignal combineLatest:@[validUsernameSignal, validPasswordSignal]&#10;                    reduce:^id(NSNumber *usernameValid, NSNumber *passwordValid&#10;                      ) &#123;&#10;                      return @([usernameValid boolValue] &#38;&#38; [passwordValid &#10;                        boolValue]);&#10;                    &#125;];</span><br></pre></td></tr></table></figure>
+<p>数据流的状态：</p>
+<p><img src="http://7xqgnx.com1.z0.glb.clouddn.com/RAC3.png" alt=""></p>
+<h3 id="doNext"><a href="#doNext" class="headerlink" title="doNext"></a>doNext</h3><p>在每次信号执行订阅者的Next方法之前，会调用这个方法，它对信号本身不会产生影响。</p>
+<p>在按钮点击之后，会有一系列验证的过程，在这期间，按钮不能被再次点击，等待验证结果出来之后，在恢复按钮未正常使用的状态。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[[[self.signInButton&#10;  rac_signalForControlEvents:UIControlEventTouchUpInside]&#10;  doNext:^(id x) &#123;&#10;    self.signInButton.enabled = NO;&#10;    self.signInFailureText.hidden = YES;&#10;  &#125;]&#10;  flattenMap:^id(id x) &#123;&#10;    return [self signInSignal];&#10;  &#125;]&#10;  subscribeNext:^(NSNumber *signedIn) &#123;&#10;    self.signInButton.enabled = YES;&#10;    BOOL success = [signedIn boolValue];&#10;    self.signInFailureText.hidden = success;&#10;    if (success) &#123;&#10;      [self performSegueWithIdentifier:@&#34;signInSuccess&#34; sender:self];&#10;    &#125;&#10;  &#125;];</span><br></pre></td></tr></table></figure>
+<p>数据流的状态：</p>
+<p><img src="http://7xqgnx.com1.z0.glb.clouddn.com/RAC4.png" alt=""></p>
+<h3 id="then"><a href="#then" class="headerlink" title="then"></a>then</h3><p>用于连接两个信号，当第一个信号完成之后(前一个信号调用sendCompleted)，才会连接then返回的信号，then之前的信号会被忽略</p>
+<p>在得到否有权限获得账户信息之后，通过then获取搜索文本的信号，再验证搜索文本的有效性，最后获取有效的搜索文本。如果获取账号信息这一步出现错误，直接调用最后的error的block。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[[[self requestAccessToTwitterSignal]&#10;  then:^RACSignal *&#123;&#10;    @strongify(self)&#10;    return self.searchText.rac_textSignal;&#10;  &#125;]&#10;  filter:^BOOL(NSString *text) &#123;&#10;    @strongify(self)&#10;    return [self isValidSearchText:text];&#10;  &#125;]&#10;  subscribeNext:^(id x) &#123;&#10;    NSLog(@&#34;%@&#34;, x);&#10;  &#125; error:^(NSError *error) &#123;&#10;    NSLog(@&#34;An error occurred: %@&#34;, error);&#10;  &#125;];</span><br></pre></td></tr></table></figure>
+<p>数据流如下图：</p>
+<p><img src="http://7xqgnx.com1.z0.glb.clouddn.com/RAC5.png" alt=""></p>
+<h3 id="deliverOn"><a href="#deliverOn" class="headerlink" title="deliverOn"></a>deliverOn</h3><p>信号传递切换到指定线程中</p>
+<p>现在创建一个信号在后台线程下载一个图片，可以考虑使用<strong>SDWebImage</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-(RACSignal *)signalForLoadingImage:(NSString *)imageUrl &#123;&#10;  &#10;  RACScheduler *scheduler = [RACScheduler&#10;                         schedulerWithPriority:RACSchedulerPriorityBackground];&#10;  &#10;  return [[RACSignal createSignal:^RACDisposable *(id&#60;RACSubscriber&#62; subscriber&#10;    ) &#123;&#10;    NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:imageUrl]&#10;    ];&#10;    UIImage *image = [UIImage imageWithData:data];&#10;    [subscriber sendNext:image];&#10;    [subscriber sendCompleted];&#10;    return nil;&#10;  &#125;] subscribeOn:scheduler];&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>图片下载完成之后切换到主线程，设置图片的显示</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cell.twitterAvatarView.image = nil;&#10;  &#10;[[[self signalForLoadingImage:tweet.profileImageUrl]&#10;  deliverOn:[RACScheduler mainThreadScheduler]]&#10;  subscribeNext:^(UIImage *image) &#123;&#10;   cell.twitterAvatarView.image = image;&#10;  &#125;];</span><br></pre></td></tr></table></figure>
+<h3 id="throttle"><a href="#throttle" class="headerlink" title="throttle"></a>throttle</h3><p>节流，可以设置某一段时间内不发送信号，等过了这段时间，将最新的信号发出</p>
+<p>在用户输入搜索文字的时候，每一次textChange都会触发搜索结果的网络请求。请求次数过于频繁且没有必要，因为有时候可能是用户还没有输完而已。并且结果频繁的显示清空体验也不好。现在通过throttle处理每经过0.5秒处理一次搜索请求。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[[[[[[self requestAccessToTwitterSignal]&#10;  then:^RACSignal *&#123;&#10;    @strongify(self)&#10;    return self.searchText.rac_textSignal;&#10;  &#125;]&#10;  filter:^BOOL(NSString *text) &#123;&#10;    @strongify(self)&#10;    return [self isValidSearchText:text];&#10;  &#125;]&#10;  throttle:0.5]&#10;  flattenMap:^RACStream *(NSString *text) &#123;&#10;    @strongify(self)&#10;    return [self signalForSearchWithText:text];&#10;  &#125;]&#10;  deliverOn:[RACScheduler mainThreadScheduler]]&#10;  subscribeNext:^(NSDictionary *jsonSearchResult) &#123;&#10;    NSArray *statuses = jsonSearchResult[@&#34;statuses&#34;];&#10;    NSArray *tweets = [statuses linq_select:^id(id tweet) &#123;&#10;      return [RWTweet tweetWithStatus:tweet];&#10;    &#125;];&#10;    [self.resultsViewController displayTweets:tweets];&#10;  &#125; error:^(NSError *error) &#123;&#10;    NSLog(@&#34;An error occurred: %@&#34;, error);&#10;  &#125;];</span><br></pre></td></tr></table></figure>
+<p>经过最后的处理，数据流如下图所示：</p>
+<p><img src="http://7xqgnx.com1.z0.glb.clouddn.com/RAC6.png" alt=""></p>
+<p>在requestAccessToTwitterSignal和signalForSearchWithText都有可能产生error，最后都会直接调用subscribleNext:error方法。</p>
+<h3 id="takeUnitl"><a href="#takeUnitl" class="headerlink" title="takeUnitl"></a>takeUnitl</h3><p>(RACSignal *) 获取信号直到某个信号执行完成</p>
+<p>比如，监听某个文本框的文本改变直到当前对象被销毁</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[_textField.rac_textSignal takeUntil:self.rac_willDeallocSignal];</span><br></pre></td></tr></table></figure>
+<h3 id="skip"><a href="#skip" class="headerlink" title="skip"></a>skip</h3><p>(NSUInteger) 跳过几个信号，选择忽略不处理</p>
+<p>第一次输入不被监听</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[_textField.rac_textSignal skip:1] subscribeNext:^(id x) &#123;&#10; &#10;   NSLog(@&#34;%@&#34;,x);&#10;&#125;];</span><br></pre></td></tr></table></figure>
+<h2 id="u5E38_u89C1_u7684_u5B8F"><a href="#u5E38_u89C1_u7684_u5B8F" class="headerlink" title="常见的宏"></a>常见的宏</h2><h3 id="RAC_28object_2C_property_29"><a href="#RAC_28object_2C_property_29" class="headerlink" title="RAC(object, property)"></a>RAC(object, property)</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RAC(_titleLabel, text) = [viewModel.titleSignal takeUntil:self.&#10;rac_prepareForReuseSignal];</span><br></pre></td></tr></table></figure>
+<p>表示将一个对象的属性和一个signal进行绑定，signal每产生一个value，都会自动执行如下代码</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[TARGET setValue:value ?: NIL_VALUE forKeyPath:KEYPATH];</span><br></pre></td></tr></table></figure>
+<h3 id="RACObserve_28TARGET_2C_KEYPATH_29"><a href="#RACObserve_28TARGET_2C_KEYPATH_29" class="headerlink" title="RACObserve(TARGET, KEYPATH)"></a>RACObserve(TARGET, KEYPATH)</h3><p>返回一个signal，检测target的keypath属性</p>
+<p>RAC和RACObserve用在一起实现双向绑定</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RAC(self.outputLabel, text) = RACObserve(self.model, name);</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/25/ReactiveCocoa2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          ReactiveCocoa2
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/25/KVC集合操作符/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">KVC集合操作符</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="ReactiveCocoa1" data-title="ReactiveCocoa1" data-url="http://yoursite.com/2016/01/25/ReactiveCocoa1/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 MOMA
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
