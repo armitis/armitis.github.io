@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>JavaScriptBridge | 美团MOMA团队</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="跟Native开发相比, 网页开发虽然在用户体验上跟Native有不小的差距, 但其在开发周期、更新方式上却有不可比拟的优势。有时为了快速上线新的业务或动态支持第三方的业务，App中不可避免的会使用webview。一般情况下, webview或多或少的都会用到cookie、定位、支付、分享等信息或功能，而这些功能却是Native; 另一方面，统一UI交互：选择列表、信息提示等对提升用户体验也非常有">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScriptBridge">
+<meta property="og:url" content="http://yoursite.com/2016/02/01/JavaScriptBridge/index.html">
+<meta property="og:site_name" content="美团MOMA团队">
+<meta property="og:description" content="跟Native开发相比, 网页开发虽然在用户体验上跟Native有不小的差距, 但其在开发周期、更新方式上却有不可比拟的优势。有时为了快速上线新的业务或动态支持第三方的业务，App中不可避免的会使用webview。一般情况下, webview或多或少的都会用到cookie、定位、支付、分享等信息或功能，而这些功能却是Native; 另一方面，统一UI交互：选择列表、信息提示等对提升用户体验也非常有">
+<meta property="og:image" content="http://7xqgnx.com1.z0.glb.clouddn.com/MomaTechWVJB.jpg">
+<meta property="og:updated_time" content="2016-02-01T11:58:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScriptBridge">
+<meta name="twitter:description" content="跟Native开发相比, 网页开发虽然在用户体验上跟Native有不小的差距, 但其在开发周期、更新方式上却有不可比拟的优势。有时为了快速上线新的业务或动态支持第三方的业务，App中不可避免的会使用webview。一般情况下, webview或多或少的都会用到cookie、定位、支付、分享等信息或功能，而这些功能却是Native; 另一方面，统一UI交互：选择列表、信息提示等对提升用户体验也非常有">
+  
+    <link rel="alternative" href="/atom.xml" title="美团MOMA团队" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/pics/icon.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">MOMA</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">美团CRM移动端团队技术博客</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>標籤</li>
+						
+						
+						<li>關於</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/iOS">iOS</a></li>
+				        
+							<li><a href="/#">android</a></li>
+				        
+							<li><a href="/#">javaScript</a></li>
+				        
+							<li><a href="/tags/RN">RN</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/RN/" style="font-size: 10px;">RN</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">美团CRM移动端团队技术博客</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">MOMA</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/pics/icon.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">MOMA</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">美团CRM移动端团队技术博客</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/iOS">iOS</a></li>
+		        
+					<li><a href="/#">android</a></li>
+		        
+					<li><a href="/#">javaScript</a></li>
+		        
+					<li><a href="/tags/RN">RN</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-JavaScriptBridge" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/02/01/JavaScriptBridge/" class="article-date">
+  	<time datetime="2016-02-01T07:07:42.000Z" itemprop="datePublished">2016-02-01</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      JavaScriptBridge
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/王贺锋/">王贺锋</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>跟Native开发相比, 网页开发虽然在用户体验上跟Native有不小的差距, 但其在开发周期、更新方式上却有不可比拟的优势。有时为了快速上线新的业务或动态支持第三方的业务，App中不可避免的会使用webview。一般情况下, webview或多或少的都会用到cookie、定位、支付、分享等信息或功能，而这些功能却是Native; 另一方面，统一UI交互：选择列表、信息提示等对提升用户体验也非常有帮助，直接使用Native显然又要比使用web来模拟Native的UI要简单的多。综合来看，webview调用Native模块完成部分交互是必不可少的，那么，如何做到呢？</p>
+<h3 id="Native_vs_Web"><a href="#Native_vs_Web" class="headerlink" title="Native vs Web"></a>Native vs Web</h3><p><strong>App开发的同学们都知道从产品体验的角度出发，webview绝不是App的第一选择，跟Native相比webview在产品体验上有下面几个方面的不足：</strong></p>
+<ol>
+<li>页面渲染慢。网页的资源加载、UI位置计算、渲染、逻辑运算等都是单线程,无法比拟Native多线程</li>
+<li>流畅性不够好。eg. 上下滑动页面时, Native的滚动流畅性要远高于WebView，可以拿两个列表页试试</li>
+<li>手势的支持比较少。webview支持的手势要比Native少，比如多点触控、ShakeGesture等</li>
+<li>很难做到UI的一致。用户首先对系统原生的UI控件比较熟悉，App的开发大都基于这些基本的控件。使用webview时，由于不能直接使用很多Native原生控件，而用JS实现的控件跟原生又有差异，所以UI的一致性是大有折扣的。即使Web控件的样式跟原生差别很小，iOS 每年的系统更新带来的UI跳转就会破坏这些花大力气实现的UI</li>
+</ol>
+<p><strong>但从业务的角度出发，有时我们不得不选择使用webview，这主要基于以下几个方面的考虑：</strong></p>
+<ol>
+<li>webview开发周期短，可以随时上线更新</li>
+<li>出于发版的考量，一些业务功能Native开发的周期过长，需要webview接入快速上线</li>
+<li>有些服务来自第三方，App开发者本身不需要支持这些服务, 使用webview展示第三方服务</li>
+</ol>
+<a id="more"></a>
+<h3 id="OC_u4E2D_u7684webview"><a href="#OC_u4E2D_u7684webview" class="headerlink" title="OC中的webview"></a>OC中的webview</h3><p>UIWebView始于iOS2.0(WKWebView iOS8.0), 网页跟Native交互的API非常简单：</p>
+<ol>
+<li>通过delegate, 可以监听网页的load事件(startload, finishload, error)</li>
+<li>调用 stringByEvaluatingJavaScriptFromString:，可以让网页执行一段JS代码, 返回值为字符串</li>
+</ol>
+<h3 id="OC_u4E0EJavaScript"><a href="#OC_u4E0EJavaScript" class="headerlink" title="OC与JavaScript"></a>OC与JavaScript</h3><p>iOS7.0之前，stringByEvaluatingJavaScriptFromString: 是OC执行JavaScript代码的唯一方式; iOS7.0的发布带来了JavaScriptCore Framework，这是对WebKit’s JavaScript Engine的一个封装，无需借助UIWebView 就可以直接以Native的方式执行JavaScript代码。</p>
+<p><strong>1. JavaScript in String</strong></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">JSContext *context = [[JSContext alloc] init];<span class="comment">//新建一个JS的执行环境, 可建多个互不影响的Context</span></span><br><span class="line">[context evaluateScript:<span class="string">@"var num = 10 + 1;"</span>];</span><br><span class="line">[context evaluateScript:<span class="string">@"function sum(a,b)&#123;return a+b;&#125;"</span>];<span class="comment">//在context中定义函数sum</span></span><br><span class="line">JSValue *sumVal = [context evaluateScript:<span class="string">@"sum(num, num)"</span>];<span class="comment">//调用sum函数,参数为num(11)</span></span><br></pre></td></tr></table></figure>
+<p><strong>2. JavaScript in Native</strong></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">  <span class="comment">//以Native的方式定义一个函数,可以在JS中直接调用, 其实就是把一个Native函数导出到JSContext</span></span><br><span class="line">  <span class="comment">//方法有两种：</span></span><br><span class="line">  <span class="comment">//	1. 以block方式定义一个函数并赋值给context中的一个变量</span></span><br><span class="line">  <span class="comment">//	2. 把实现JSExport协议的对象赋值给context中的一个变量</span></span><br><span class="line">context[<span class="string">@"makeNSColor"</span>] = ^(<span class="built_in">NSDictionary</span> *rgb) &#123;<span class="comment">//方式1</span></span><br><span class="line">  <span class="keyword">float</span> r = rgb[<span class="string">@"red"</span>]<span class="variable">.floatValue</span>;</span><br><span class="line">  <span class="keyword">float</span> g = rgb[<span class="string">@"green"</span>]<span class="variable">.floatValue</span>;</span><br><span class="line">  <span class="keyword">float</span> b = rgb[<span class="string">@"blue"</span>]<span class="variable">.floatValue</span>;</span><br><span class="line">  <span class="keyword">return</span> [<span class="built_in">NSColor</span> colorWithRed:(r/<span class="number">255.0</span>) green:(g/<span class="number">255.0</span>) blue:(b/<span class="number">255.0</span>) alpha:<span class="number">1.0</span>];</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//================== 方式2 ===========================</span></span><br><span class="line"><span class="comment">//MTNBExport.h</span></span><br><span class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">MTNBExport</span> &lt;<span class="title">JSExport</span>&gt;</span></span><br><span class="line"> - (<span class="keyword">void</span>)handleMessageFromJs:(<span class="built_in">NSString</span> *)message;</span><br><span class="line"> - (<span class="keyword">void</span>)logFromJs:(<span class="built_in">NSString</span> *)message;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"><span class="comment">//MTNBForwarder.h</span></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">MTNBForwarder</span>:<span class="title">NSObject</span>&lt;<span class="title">MTNBExport</span>&gt;</span></span><br><span class="line"> - (<span class="keyword">void</span>)handleMessageFromJs:(<span class="built_in">NSStrig</span> *)message;</span><br><span class="line"> - (<span class="keyword">void</span>)logFromJs:(<span class="built_in">NSString</span> *)message;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"><span class="comment">//使用</span></span><br><span class="line">context[<span class="string">@"_MTNB"</span>] = [[MTNBForwarder alloc] init];<span class="comment">//JS中:_MTNB.handleMessageFromJs可以直接调用</span></span><br></pre></td></tr></table></figure>
+<p><a href="https://developer.apple.com/library/ios/documentation/JavaScriptCore/Reference/JSExport_Ref/index.html" target="_blank" rel="external">【注】查看JSExport的文档</a></p>
+<h3 id="u4E24_u79CDJavaScriptBridge_u7684_u5B9E_u73B0"><a href="#u4E24_u79CDJavaScriptBridge_u7684_u5B9E_u73B0" class="headerlink" title="两种JavaScriptBridge的实现"></a>两种JavaScriptBridge的实现</h3><p><strong><a href="https://github.com/marcuswestin/WebViewJavascriptBridge" target="_blank" rel="external">1. 开源项目 WebViewJavaScriptBridge</a></strong></p>
+<p>这是个著名的开源项目，几乎不限制iOS的系统版本，实现方式比较简单但逻辑却比较绕, 核心的思想就是JavaScript通过load事件给Native发送消息, 之后Native通过stringByEvaluatingJavaScriptFromString: 完成通信，下图可以描述核心思想: </p>
+<p><img src="http://7xqgnx.com1.z0.glb.clouddn.com/MomaTechWVJB.jpg" alt="Alt text"></p>
+<p><strong><a href="http://git.sankuai.com/projects/IOS/repos/mtnb/browse" target="_blank" rel="external">2. 美团项目 MTNB</a></strong></p>
+<p>MTNB的实现基于JavaScriptCore, 相比于上一个开源项目, MTNB的实现更加简单、优雅、自定义功能扩展更加方便，另外，MTNB基于安全考虑，网页端加入了鉴权部分, 使用可以参考 <a href="http://wiki.sankuai.com/display/DEVPUB/Meituan+Native+Bridge" target="_blank" rel="external">官方原理</a> 、<a href="http://wiki.sankuai.com/pages/viewpage.action?pageId=362358831" target="_blank" rel="external">接入备忘</a>。MTNB需要Native跟JS的配合, 下边是MTNB的的实现描述：</p>
+<h6 id="5BJavaScript_Code_5D"><a href="#5BJavaScript_Code_5D" class="headerlink" title="[JavaScript Code]"></a>[JavaScript Code]</h6><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//定义一些变量...</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">send</span>(<span class="params">msg, callback</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 保存callback, 把callbackId写入msg</span></span><br><span class="line">  _MTNB.handleMessageFromJs(<span class="built_in">JSON</span>.stringify(msg));<span class="comment">//直接调用Native方法</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">runCallback</span>(<span class="params">response</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 获取并删除response.callbackId对一个的callback</span></span><br><span class="line">  callback(response);<span class="comment">//执行回调</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h6 id="5BObject-C_code_5D"><a href="#5BObject-C_code_5D" class="headerlink" title="[Object-C code]"></a>[Object-C code]</h6><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//MTNBExport.h</span></span><br><span class="line"><span class="class"><span class="keyword">@protocol</span> <span class="title">MTNBExport</span> &lt;<span class="title">JSExport</span>&gt;</span></span><br><span class="line"> - (<span class="keyword">void</span>)handleMessageFromJs:(<span class="built_in">NSString</span> *)message;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"><span class="comment">//MTNBForwarder.h</span></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">MTNBForwarder</span>:<span class="title">NSObject</span>&lt;<span class="title">MTNBExport</span>&gt;</span></span><br><span class="line"> <span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="built_in">UIWebView</span> *webView;</span><br><span class="line"> - (<span class="keyword">void</span>)handleMessageFromJs:(<span class="built_in">NSStrig</span> *)message;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line"> <span class="comment">//通过JSExport的方式, 把Native方法注册到JSContext中</span></span><br><span class="line"> <span class="comment">//webView:didCreateJavaScriptContext:forFrame: 被调用是，完成JSExport对象注入</span></span><br><span class="line"></span><br><span class="line">context[<span class="string">@"_MTNB"</span>] = [[MTNBForwarder alloc] init];<span class="comment">//JS中:_MTNB.handleMessageFromJs可以直接调用</span></span><br><span class="line"></span><br><span class="line"> <span class="comment">//handleMessageFromJs执行后, 如果有JS回调, 则提取callbackId 和 response</span></span><br><span class="line"> <span class="comment">//调用 stringByEvaluatingJavaScriptFromString:</span></span><br><span class="line"> <span class="comment">//</span></span><br><span class="line">[webView stringByEvaluatingJavaScriptFromString:<span class="string">"runCallback(XXX)"</span>];<span class="comment">//xxx为字符串化后的参数</span></span><br></pre></td></tr></table></figure>
+<h3 id="u540E_u8BB0"><a href="#u540E_u8BB0" class="headerlink" title="后记"></a>后记</h3><p><a href="https://developer.apple.com/library/ios/documentation/WebKit/Reference/WKWebView_Ref/" target="_blank" rel="external">WKWebView</a>作为UIWebView的替代者, 随着iOS8.0的发布浮出水面。跟UIWebView相比, WKWebView渲染网页的速度更快，提供的接口也更加丰富，但这并不意味着我们可以放弃Bridge，相反，当App支持的iOS版本提升到8.0的时候，要考虑同WKWebView替换UIWebView升级Bridge</p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/02/24/RN中的CSS应用/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          RN中的Style应用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/26/RunLoop源码分析/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">RunLoop源码分析</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="JavaScriptBridge" data-title="JavaScriptBridge" data-url="http://yoursite.com/2016/02/01/JavaScriptBridge/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 MOMA
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

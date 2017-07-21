@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>Xcode Debug Toolset | 美团MOMA团队</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Xcode Debug Toolsetprint
+简写成p, pri, ptin
+po(print object)可以打印对象的description方法的结果
+打印不同格式可以用p/x number打印十六进制，p/t number打印二进制，p/c char打印字符。这里是完整清单https://sourceware.org/gdb/onlinedocs/gdb/Output-Formats.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Xcode Debug Toolset">
+<meta property="og:url" content="http://yoursite.com/2017/07/21/XcodeDebug/index.html">
+<meta property="og:site_name" content="美团MOMA团队">
+<meta property="og:description" content="Xcode Debug Toolsetprint
+简写成p, pri, ptin
+po(print object)可以打印对象的description方法的结果
+打印不同格式可以用p/x number打印十六进制，p/t number打印二进制，p/c char打印字符。这里是完整清单https://sourceware.org/gdb/onlinedocs/gdb/Output-Formats.">
+<meta property="og:image" content="http://chuantu.biz/t5/143/1500545154x1730513932.png">
+<meta property="og:image" content="http://chuantu.biz/t5/143/1500545827x1730513932.png">
+<meta property="og:image" content="https://pspdfkit.com/images/blog/2017/user-breakpoints-in-xcode/move-to-user@2x-d63238f8.png">
+<meta property="og:updated_time" content="2017-07-21T07:27:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Xcode Debug Toolset">
+<meta name="twitter:description" content="Xcode Debug Toolsetprint
+简写成p, pri, ptin
+po(print object)可以打印对象的description方法的结果
+打印不同格式可以用p/x number打印十六进制，p/t number打印二进制，p/c char打印字符。这里是完整清单https://sourceware.org/gdb/onlinedocs/gdb/Output-Formats.">
+  
+    <link rel="alternative" href="/atom.xml" title="美团MOMA团队" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="/pics/icon.png" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">MOMA</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">美团CRM移动端团队技术博客</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>標籤</li>
+						
+						
+						<li>關於</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+							<li><a href="/tags/iOS">iOS</a></li>
+				        
+							<li><a href="/#">android</a></li>
+				        
+							<li><a href="/#">javaScript</a></li>
+				        
+							<li><a href="/tags/RN">RN</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/RN/" style="font-size: 10px;">RN</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">美团CRM移动端团队技术博客</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">MOMA</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="/pics/icon.png" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">MOMA</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">美团CRM移动端团队技术博客</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+					<li><a href="/tags/iOS">iOS</a></li>
+		        
+					<li><a href="/#">android</a></li>
+		        
+					<li><a href="/#">javaScript</a></li>
+		        
+					<li><a href="/tags/RN">RN</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-XcodeDebug" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/21/XcodeDebug/" class="article-date">
+  	<time datetime="2017-07-20T16:00:00.000Z" itemprop="datePublished">2017-07-21</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Xcode Debug Toolset
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/李航/">李航</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Xcode_Debug_Toolset"><a href="#Xcode_Debug_Toolset" class="headerlink" title="Xcode Debug Toolset"></a>Xcode Debug Toolset</h1><h2 id="print"><a href="#print" class="headerlink" title="print"></a>print</h2><ul>
+<li>简写成p, pri, ptin</li>
+<li>po(print object)可以打印对象的description方法的结果</li>
+<li>打印不同格式可以用p/x number打印十六进制，p/t number打印二进制，p/c char打印字符。这里是完整清单<a href="https://sourceware.org/gdb/onlinedocs/gdb/Output-Formats.html" target="_blank" rel="external">https://sourceware.org/gdb/onlinedocs/gdb/Output-Formats.html</a></li>
+<li><code>po [0x1234 _ivarDescription]</code></li>
+<li><code>po [0x1234 _shortMethodDescription]</code></li>
+<li><code>po [0x1234 _methodDescription]</code></li>
+<li><code>po [[UIWindow keyWindow] recursiveDescription]</code>打印window所有的视图层级</li>
+<li><code>po [[[UIWindow keyWindow] rootViewController] _printHierarchy]</code>打印controller的视图层级</li>
+</ul>
+<h5 id="u8C03_u8BD5_u5BC4_u5B58_u5668_u4E2D_u7684_u53D8_u91CF_uFF1A"><a href="#u8C03_u8BD5_u5BC4_u5B58_u5668_u4E2D_u7684_u53D8_u91CF_uFF1A" class="headerlink" title="调试寄存器中的变量："></a>调试寄存器中的变量：</h5><ul>
+<li><code>register read</code> 打印寄存器中的值</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>platform</th>
+<th>recriver</th>
+<th>SEL</th>
+<th>Arg1</th>
+<th>Arg2</th>
+<th>return value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>x86_64</td>
+<td>rdi或者<code>$rbp+16</code></td>
+<td>rsi或者<code>$rbp+24</code></td>
+<td>rdx或者<code>$rbp+32</code></td>
+<td>rcx或者<code>$rbp+40</code></td>
+<td>rax</td>
+</tr>
+<tr>
+<td>arm64</td>
+<td>x0</td>
+<td>x1</td>
+<td>x2</td>
+<td>x3</td>
+</tr>
+<tr>
+<td>arm</td>
+<td>r0</td>
+<td>r1</td>
+<td>r2</td>
+<td>r3</td>
+</tr>
+</tbody>
+</table>
+<h2 id="erpression"><a href="#erpression" class="headerlink" title="erpression"></a>erpression</h2><ul>
+<li>简写成 e，执行代码</li>
+<li><code>e [((UIView *)0x06ae2) setBackgroundColor:[UIColor redColor]]</code>更改一个view的背景颜色</li>
+<li><code>e class_getInstanceMethod([MyViewController class], @selector(layoutSubviews))</code>查看Method</li>
+<li><code>e BOOL $a = YES</code>创建一个变量，变量名要以<code>$</code>作前缀</li>
+</ul>
+<h2 id="Breakpoint"><a href="#Breakpoint" class="headerlink" title="Breakpoint"></a>Breakpoint</h2><h3 id="u547D_u4EE4_u884C_u6DFB_u52A0_u65AD_u70B9"><a href="#u547D_u4EE4_u884C_u6DFB_u52A0_u65AD_u70B9" class="headerlink" title="命令行添加断点"></a>命令行添加断点</h3><ul>
+<li><code>br set -a 0x01234</code></li>
+<li><code>br set -r &quot;UIView&quot;</code></li>
+</ul>
+<h3 id="u901A_u7528_u65AD_u70B9"><a href="#u901A_u7528_u65AD_u70B9" class="headerlink" title="通用断点"></a>通用断点</h3><ul>
+<li>All Exceptions 异常断点</li>
+<li><p><code>UIViewAlertForUnsatisfiableConstraints</code> :<br>在遇到Autolayout约束冲突时会触发该断点</p>
+</li>
+<li><p><code>UIApplicationMain</code>:</p>
+<p><strong>Debugger Command:</strong><code>e @import UIKit</code></p>
+<p>这样在控制台中可以直接打印view的frame:<br><code>p [view bounds]</code></p>
+<p>  <img src="http://chuantu.biz/t5/143/1500545154x1730513932.png" alt=""></p>
+</li>
+</ul>
+<h3 id="u7B26_u53F7_u65AD_u70B9"><a href="#u7B26_u53F7_u65AD_u70B9" class="headerlink" title="符号断点"></a>符号断点</h3><p> <img src="http://chuantu.biz/t5/143/1500545827x1730513932.png" alt=""></p>
+<h3 id="u5C06_u65AD_u70B9_u6DFB_u52A0_u5230User_Breakpoints_u4E2D_uFF0C_u53EF_u4EE5_u8DE8_u5DE5_u7A0B_u5171_u4EAB"><a href="#u5C06_u65AD_u70B9_u6DFB_u52A0_u5230User_Breakpoints_u4E2D_uFF0C_u53EF_u4EE5_u8DE8_u5DE5_u7A0B_u5171_u4EAB" class="headerlink" title="将断点添加到User Breakpoints中，可以跨工程共享"></a>将断点添加到User Breakpoints中，可以跨工程共享</h3><p> <img src="https://pspdfkit.com/images/blog/2017/user-breakpoints-in-xcode/move-to-user@2x-d63238f8.png" alt="s"></p>
+<h2 id="watchpoint"><a href="#watchpoint" class="headerlink" title="watchpoint"></a>watchpoint</h2><p>  监视内存地址发生读写</p>
+<ul>
+<li><p><code>watchpoint s e read 0x7f8c519b4600</code></p>
+</li>
+<li><p><code>watchpoint s e read_write 0x7f8c519b4600</code></p>
+</li>
+</ul>
+<p>监视vMain变量什么时候被重写了，监视这个地址什么时候被写入</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">(lldb) p (<span class="keyword">ptrdiff_t</span>)ivar_getOffset((<span class="keyword">struct</span> Ivar *)class_getInstanceVariable([MyView <span class="keyword">class</span>], <span class="string">"vMain"</span>))</span><br><span class="line">(<span class="keyword">ptrdiff_t</span>) $<span class="number">0</span> = <span class="number">8</span></span><br><span class="line">(lldb) watchpoint <span class="built_in">set</span> expression -- (<span class="keyword">int</span> *)$myView + <span class="number">8</span></span><br><span class="line">Watchpoint created: Watchpoint <span class="number">3</span>: addr = <span class="number">0x7fa554231340</span> size = <span class="number">8</span> state = enabled type = w</span><br><span class="line"><span class="keyword">new</span> value: <span class="number">0x0000000000000000</span></span><br></pre></td></tr></table></figure>
+<h2 id="image_lookup"><a href="#image_lookup" class="headerlink" title="image lookup"></a>image lookup</h2><ul>
+<li><code>image lookup -s UIView</code> 打印UIView所在的映像文件</li>
+<li><code>image lookup -n setCenterPlaceholder</code>打印某个方法所在的映像文件</li>
+<li>更多用法参考 <code>help image lookup</code></li>
+</ul>
+<h2 id="xcode__u73AF_u5883_u53D8_u91CF"><a href="#xcode__u73AF_u5883_u53D8_u91CF" class="headerlink" title="xcode 环境变量"></a>xcode 环境变量</h2><ul>
+<li><code>OBJC_PRINT_REPLACED_METHODS YES</code> 打印重名方法</li>
+<li><code>DYLD_PRINT_STATISTICS 1</code> 打印App启动时DYLD加载时长</li>
+</ul>
+<h2 id="u53C2_u8003"><a href="#u53C2_u8003" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a href="https://developer.apple.com/library/content/technotes/tn2239/_index.html" target="_blank" rel="external">https://developer.apple.com/library/content/technotes/tn2239/_index.html</a></li>
+<li><a href="https://www.objc.io/issues/19-debugging/debugging-case-study/" target="_blank" rel="external">https://www.objc.io/issues/19-debugging/debugging-case-study/</a></li>
+<li><a href="https://pspdfkit.com/blog/2017/user-breakpoints-in-xcode/" target="_blank" rel="external">https://pspdfkit.com/blog/2017/user-breakpoints-in-xcode/</a></li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/02/24/RN中的CSS应用/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">RN中的Style应用</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="XcodeDebug" data-title="Xcode Debug Toolset" data-url="http://yoursite.com/2017/07/21/XcodeDebug/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2017 MOMA
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
