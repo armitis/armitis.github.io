@@ -181,105 +181,6 @@
 
       <div class="body-wrap">
   
-    <article id="post-ReactiveCocoa2" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/01/25/ReactiveCocoa2/" class="article-date">
-  	<time datetime="2016-01-25T08:38:24.000Z" itemprop="datePublished">2016-01-25</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/25/ReactiveCocoa2/">ReactiveCocoa2</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="RACCommand"><a href="#RACCommand" class="headerlink" title="RACCommand"></a>RACCommand</h3><p>理解：个人觉得是对RACSignal的封装，侧重于对事件的信号的封装。有了RACComand，就可以把动作通过它很方便的放到ViewModel中，类似于以下这种方式:</p>
-<p>1.在ViewModel中定义RACCommand</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@interface SubscribeViewModel : NSObject&#10;@property(nonatomic, strong) RACCommand *subscribeCommand;&#10; &#10;@end</span><br></pre></td></tr></table></figure>
-<p>2.在ViewModel中处理具体的RACCommand封装的动作信号</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> - (RACCommand *)subscribeCommand &#123;&#10;  if (!_subscribeCommand) &#123;&#10;      NSString *email = self.email;&#10;      _subscribeCommand = [[RACCommand alloc] initWithEnabled:self.&#10;      emailValidSignal signalBlock:^RACSignal *(id input) &#123;&#10;          return [SubscribeViewModel postEmail:email];&#10;      &#125;];&#10;  &#125;&#10;  return _subscribeCommand;&#10;&#125;</span><br></pre></td></tr></table></figure>
-<p>input参数是在command调用excute方法的时候传进来的。</p>
-<p>3.在ViewController中将ViewModel的RACCommand绑定到控件的事件信号上</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.subscribeButton.rac_command = self.viewModel.subscribeCommand;</span><br></pre></td></tr></table></figure>
-<p>如果要对某个行为进行单元测试也非常方便，直接对ViewModel层进行测试就可以了，并且没有任务Uiew层的显示逻辑，纯业务逻辑测起来很方便。如果没有RACCommand，直接通过signal去处理，可能类似这种方式：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[self.button rac_signalForControlEvents:UIControlEventTouchUpInside]&#10;subscribeNext:^(id x) &#123;&#10;&#125;];</span><br></pre></td></tr></table></figure>
-<p>直接在ViewController中定义了动作的逻辑，没有很好的分离。</p>
-<h3 id="u521D_u59CB_u5316"><a href="#u521D_u59CB_u5316" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_subscribeCommand = [[RACCommand alloc] initWithEnabled:self.emailValidSignal &#10;signalBlock:^RACSignal *(id input) &#123;&#10;      return [SubscribeViewModel postEmail:email];&#10;&#125;];</span><br></pre></td></tr></table></figure>
-<p>signalBlock必须要返回一个信号，不能传nil，如果不想传递信号，则可以创建空的信号</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[RACSignal empty]</span><br></pre></td></tr></table></figure>
-<p>RAC</p>
-<p>emailValidSignal用来指定创建的命令是否能够执行，self.emailValidSignal定义如下:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_emailValidSignal = [RACObserve(self, email) map:^id(NSString *email) &#123;&#10;         return @([email isValidEmail]);&#10;     &#125;];</span><br></pre></td></tr></table></figure>
-<p>当self.emailValidSignal信号返回数据为yes的时候，_subscribeCommand才能够响应行为</p>
-<p>signalBlock是当_subscribeCommand执行的时候会被调用的逻辑，该block返回的是一个包含了命令执行之后结果的signal。</p>
-<h3 id="u5C5E_u6027"><a href="#u5C5E_u6027" class="headerlink" title="属性"></a>属性</h3><p>allowsConcurrentExecution代表当该命令正在执行的时候，是否能够再次触发改命令。</p>
-<p>RACCommand内部是如何通过它去控制当前命令能不能够被执行以及能不能并发的执行:</p>
-<p>以UIButton举例：</p>
-<p><strong>UIButton+RACCommandSupport.m</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//UIButton&#30340;enabel&#21644;command&#30340;enabel&#32465;&#23450;&#36215;&#26469;&#20102;&#65292;&#20063;&#23601;&#26159;&#22914;&#26524;command&#30340;enabel&#10;//&#35774;&#32622;&#26410;false&#65292;&#37027;&#20040;button&#21017;&#19981;&#21487;&#29992;&#12290;&#10; disposable = [command.enabled setKeyPath:@keypath(self.enabled) onObject:self];</span><br></pre></td></tr></table></figure>
-<p>以下是RACCommand中有关allowsConcurrentExecution的源码:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if (enabledSignal == nil) &#123;&#10;       enabledSignal = [RACSignal return:@YES];&#10;   &#125; else &#123;&#10;       enabledSignal = [[[enabledSignal&#10;           startWith:@YES]&#10;           takeUntil:self.rac_willDeallocSignal]&#10;           replayLast];&#10;   &#125;&#10;   _immediateEnabled = [[RACSignal&#10;       combineLatest:@[ enabledSignal, moreExecutionsAllowed ]]&#10;       and];&#10; &#10;   _enabled = [[[[[self.immediateEnabled&#10;       take:1]&#10;       concat:[[self.immediateEnabled skip:1] deliverOn:RACScheduler.&#10;       mainThreadScheduler]]&#10;       distinctUntilChanged]&#10;       replayLast]&#10;       setNameWithFormat:@&#34;%@ -enabled&#34;, self];</span><br></pre></td></tr></table></figure>
-<p>整个command是否可用，是由immeditateEnable来决定的，而imediateEnabled是取enableSignal和moreExecutionsAllowed的与操作。</p>
-<p>enableSignal是command初始化方法传进来的第一个参数。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RACSignal *immediateExecuting = [RACObserve(self, activeExecutionSignals) map:^&#10;(NSArray *activeSignals) &#123;&#10;        return @(activeSignals.count &#62; 0);&#10;    &#125;];&#10; &#10;    RACSignal *moreExecutionsAllowed = [RACSignal&#10;        if:RACObserve(self, allowsConcurrentExecution)&#10;        then:[RACSignal return:@YES]&#10;        else:[immediateExecuting not]];</span><br></pre></td></tr></table></figure>
-<p>imediateExecuting是当前正在执行未完成的命令数量的信号，如果command的allowsConcurrentExecution设置的yes，则moreExcutionsAllowed返回yes，反之则取决于有没有正在执行的信号，如果有就返回false，没有返回yes。一个信号是否执行完，根据signal有没有发出complete事件来判断的。</p>
-<h3 id="u65B9_u6CD5"><a href="#u65B9_u6CD5" class="headerlink" title="方法"></a>方法</h3><h4 id="excute"><a href="#excute" class="headerlink" title="excute"></a>excute</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RACSignal *signal =[command execute:@2];</span><br></pre></td></tr></table></figure>
-<p>在command的初始化方法中，有一个signalBlock参数，该block有一个input参数，在command执行excute方法的时候传入的参数被当作signalBlock的input参数传到signalBlock中。比如通常将一个网络请求的封装成一个Command，此时网络请求的参数就可以通过调用excute的时候传入。</p>
-<p>这种情况下，获取command执行之后返回的数据可以通过:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RACSignal *signal =[command execute:@2];&#10;// &#22312;&#36825;&#37324;&#23601;&#21487;&#20197;&#35746;&#38405;&#20449;&#21495;&#20102; &#10;[signal subscribeNext:^(id x) &#123; &#10;    NSLog(@&#34;%@&#34;,x); &#10;&#125;];</span><br></pre></td></tr></table></figure>
-<p><strong>订阅命令完成的信号</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[self.viewModel.subscribeCommand execute:nil] subscribeCompleted:^&#123;&#10;  NSLog(@&#34;The command executed&#34;);&#10;&#125;];</span><br></pre></td></tr></table></figure>
-<h4 id="executionSignals"><a href="#executionSignals" class="headerlink" title="executionSignals"></a>executionSignals</h4><p>属于信号中的信号，在subscribeNext中返回的是信号x，再次订阅信号x才能获取具体数据</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[command.executionSignals subscribeNext:^(RACSignal *x) &#123; &#10;       [x subscribeNext:^(id x) &#123; &#10;           NSLog(@&#34;%@&#34;, x); &#10;       &#125;];</span><br></pre></td></tr></table></figure>
-<p>也可以直接使用excutionSignals.switchToLatest subscribeNext:获取到数据</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> // &#30417;&#21548;&#30331;&#24405;&#20135;&#29983;&#30340;&#25968;&#25454;&#10;[_LoginCommand.executionSignals.switchToLatest subscribeNext:^(id x) &#123;&#10; &#10;    if ([x isEqualToString:@&#34;&#30331;&#24405;&#25104;&#21151;&#34;]) &#123;&#10;        NSLog(@&#34;&#30331;&#24405;&#25104;&#21151;&#34;);&#10;    &#125;&#10;&#125;];</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/郑智文/">郑智文</a>
-	</div>
-
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-ReactiveCocoa1" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -385,70 +286,6 @@
 	</div>
 
 
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-AFNetworking源码解析1" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/01/25/AFNetworking源码解析1/" class="article-date">
-  	<time datetime="2016-01-25T08:38:24.000Z" itemprop="datePublished">2016-01-25</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/25/AFNetworking源码解析1/">AFNetworking源码解析1</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="u57FA_u672C_u5185_u5BB9"><a href="#u57FA_u672C_u5185_u5BB9" class="headerlink" title="基本内容"></a>基本内容</h2><p>本节主要介绍iOS中多线程相关的内容，先简单介绍NSOperation的使用，然后结合GCD实现任务之间的管理，比如每个任务完成之后的处理以及任务与任务之间的依赖，所有任务完成之后的处理等，通过AFNetworking源码分析其具体实现。</p>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/郑智文/">郑智文</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/01/25/AFNetworking源码解析1/#more">more >></a>
-        </p>
       
       <div class="clearfix"></div>
     </div>
@@ -597,6 +434,169 @@
 <p>方法，那么子线程runloop的初始化和业务逻辑就会混到一起，并且每一次都会重新初始化。AFNetworking通过一个静态全局的子线程去管理所有的网络请求，其对应的runloop也只需要初始化一次。</p>
 <p>通过以上分析，可以知道如果需要让一个子线程去持续的监听时间，就需要启动它的runloop并且忘其中注册source，timer，oberserver三者之一的消息类型。在默认情况下子线程的runloop是不会自己创建和启动的。</p>
 
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/郑智文/">郑智文</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-AFNetworking源码解析1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/25/AFNetworking源码解析1/" class="article-date">
+  	<time datetime="2016-01-25T08:38:24.000Z" itemprop="datePublished">2016-01-25</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/25/AFNetworking源码解析1/">AFNetworking源码解析1</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="u57FA_u672C_u5185_u5BB9"><a href="#u57FA_u672C_u5185_u5BB9" class="headerlink" title="基本内容"></a>基本内容</h2><p>本节主要介绍iOS中多线程相关的内容，先简单介绍NSOperation的使用，然后结合GCD实现任务之间的管理，比如每个任务完成之后的处理以及任务与任务之间的依赖，所有任务完成之后的处理等，通过AFNetworking源码分析其具体实现。</p>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/郑智文/">郑智文</a>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/01/25/AFNetworking源码解析1/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-ReactiveCocoa2" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/25/ReactiveCocoa2/" class="article-date">
+  	<time datetime="2016-01-25T08:38:24.000Z" itemprop="datePublished">2016-01-25</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/25/ReactiveCocoa2/">ReactiveCocoa2</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="RACCommand"><a href="#RACCommand" class="headerlink" title="RACCommand"></a>RACCommand</h3><p>理解：个人觉得是对RACSignal的封装，侧重于对事件的信号的封装。有了RACComand，就可以把动作通过它很方便的放到ViewModel中，类似于以下这种方式:</p>
+<p>1.在ViewModel中定义RACCommand</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@interface SubscribeViewModel : NSObject&#10;@property(nonatomic, strong) RACCommand *subscribeCommand;&#10; &#10;@end</span><br></pre></td></tr></table></figure>
+<p>2.在ViewModel中处理具体的RACCommand封装的动作信号</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> - (RACCommand *)subscribeCommand &#123;&#10;  if (!_subscribeCommand) &#123;&#10;      NSString *email = self.email;&#10;      _subscribeCommand = [[RACCommand alloc] initWithEnabled:self.&#10;      emailValidSignal signalBlock:^RACSignal *(id input) &#123;&#10;          return [SubscribeViewModel postEmail:email];&#10;      &#125;];&#10;  &#125;&#10;  return _subscribeCommand;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>input参数是在command调用excute方法的时候传进来的。</p>
+<p>3.在ViewController中将ViewModel的RACCommand绑定到控件的事件信号上</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">self.subscribeButton.rac_command = self.viewModel.subscribeCommand;</span><br></pre></td></tr></table></figure>
+<p>如果要对某个行为进行单元测试也非常方便，直接对ViewModel层进行测试就可以了，并且没有任务Uiew层的显示逻辑，纯业务逻辑测起来很方便。如果没有RACCommand，直接通过signal去处理，可能类似这种方式：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[self.button rac_signalForControlEvents:UIControlEventTouchUpInside]&#10;subscribeNext:^(id x) &#123;&#10;&#125;];</span><br></pre></td></tr></table></figure>
+<p>直接在ViewController中定义了动作的逻辑，没有很好的分离。</p>
+<h3 id="u521D_u59CB_u5316"><a href="#u521D_u59CB_u5316" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_subscribeCommand = [[RACCommand alloc] initWithEnabled:self.emailValidSignal &#10;signalBlock:^RACSignal *(id input) &#123;&#10;      return [SubscribeViewModel postEmail:email];&#10;&#125;];</span><br></pre></td></tr></table></figure>
+<p>signalBlock必须要返回一个信号，不能传nil，如果不想传递信号，则可以创建空的信号</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[RACSignal empty]</span><br></pre></td></tr></table></figure>
+<p>RAC</p>
+<p>emailValidSignal用来指定创建的命令是否能够执行，self.emailValidSignal定义如下:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_emailValidSignal = [RACObserve(self, email) map:^id(NSString *email) &#123;&#10;         return @([email isValidEmail]);&#10;     &#125;];</span><br></pre></td></tr></table></figure>
+<p>当self.emailValidSignal信号返回数据为yes的时候，_subscribeCommand才能够响应行为</p>
+<p>signalBlock是当_subscribeCommand执行的时候会被调用的逻辑，该block返回的是一个包含了命令执行之后结果的signal。</p>
+<h3 id="u5C5E_u6027"><a href="#u5C5E_u6027" class="headerlink" title="属性"></a>属性</h3><p>allowsConcurrentExecution代表当该命令正在执行的时候，是否能够再次触发改命令。</p>
+<p>RACCommand内部是如何通过它去控制当前命令能不能够被执行以及能不能并发的执行:</p>
+<p>以UIButton举例：</p>
+<p><strong>UIButton+RACCommandSupport.m</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">//UIButton&#30340;enabel&#21644;command&#30340;enabel&#32465;&#23450;&#36215;&#26469;&#20102;&#65292;&#20063;&#23601;&#26159;&#22914;&#26524;command&#30340;enabel&#10;//&#35774;&#32622;&#26410;false&#65292;&#37027;&#20040;button&#21017;&#19981;&#21487;&#29992;&#12290;&#10; disposable = [command.enabled setKeyPath:@keypath(self.enabled) onObject:self];</span><br></pre></td></tr></table></figure>
+<p>以下是RACCommand中有关allowsConcurrentExecution的源码:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if (enabledSignal == nil) &#123;&#10;       enabledSignal = [RACSignal return:@YES];&#10;   &#125; else &#123;&#10;       enabledSignal = [[[enabledSignal&#10;           startWith:@YES]&#10;           takeUntil:self.rac_willDeallocSignal]&#10;           replayLast];&#10;   &#125;&#10;   _immediateEnabled = [[RACSignal&#10;       combineLatest:@[ enabledSignal, moreExecutionsAllowed ]]&#10;       and];&#10; &#10;   _enabled = [[[[[self.immediateEnabled&#10;       take:1]&#10;       concat:[[self.immediateEnabled skip:1] deliverOn:RACScheduler.&#10;       mainThreadScheduler]]&#10;       distinctUntilChanged]&#10;       replayLast]&#10;       setNameWithFormat:@&#34;%@ -enabled&#34;, self];</span><br></pre></td></tr></table></figure>
+<p>整个command是否可用，是由immeditateEnable来决定的，而imediateEnabled是取enableSignal和moreExecutionsAllowed的与操作。</p>
+<p>enableSignal是command初始化方法传进来的第一个参数。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RACSignal *immediateExecuting = [RACObserve(self, activeExecutionSignals) map:^&#10;(NSArray *activeSignals) &#123;&#10;        return @(activeSignals.count &#62; 0);&#10;    &#125;];&#10; &#10;    RACSignal *moreExecutionsAllowed = [RACSignal&#10;        if:RACObserve(self, allowsConcurrentExecution)&#10;        then:[RACSignal return:@YES]&#10;        else:[immediateExecuting not]];</span><br></pre></td></tr></table></figure>
+<p>imediateExecuting是当前正在执行未完成的命令数量的信号，如果command的allowsConcurrentExecution设置的yes，则moreExcutionsAllowed返回yes，反之则取决于有没有正在执行的信号，如果有就返回false，没有返回yes。一个信号是否执行完，根据signal有没有发出complete事件来判断的。</p>
+<h3 id="u65B9_u6CD5"><a href="#u65B9_u6CD5" class="headerlink" title="方法"></a>方法</h3><h4 id="excute"><a href="#excute" class="headerlink" title="excute"></a>excute</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RACSignal *signal =[command execute:@2];</span><br></pre></td></tr></table></figure>
+<p>在command的初始化方法中，有一个signalBlock参数，该block有一个input参数，在command执行excute方法的时候传入的参数被当作signalBlock的input参数传到signalBlock中。比如通常将一个网络请求的封装成一个Command，此时网络请求的参数就可以通过调用excute的时候传入。</p>
+<p>这种情况下，获取command执行之后返回的数据可以通过:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">RACSignal *signal =[command execute:@2];&#10;// &#22312;&#36825;&#37324;&#23601;&#21487;&#20197;&#35746;&#38405;&#20449;&#21495;&#20102; &#10;[signal subscribeNext:^(id x) &#123; &#10;    NSLog(@&#34;%@&#34;,x); &#10;&#125;];</span><br></pre></td></tr></table></figure>
+<p><strong>订阅命令完成的信号</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[[self.viewModel.subscribeCommand execute:nil] subscribeCompleted:^&#123;&#10;  NSLog(@&#34;The command executed&#34;);&#10;&#125;];</span><br></pre></td></tr></table></figure>
+<h4 id="executionSignals"><a href="#executionSignals" class="headerlink" title="executionSignals"></a>executionSignals</h4><p>属于信号中的信号，在subscribeNext中返回的是信号x，再次订阅信号x才能获取具体数据</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[command.executionSignals subscribeNext:^(RACSignal *x) &#123; &#10;       [x subscribeNext:^(id x) &#123; &#10;           NSLog(@&#34;%@&#34;, x); &#10;       &#125;];</span><br></pre></td></tr></table></figure>
+<p>也可以直接使用excutionSignals.switchToLatest subscribeNext:获取到数据</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"> // &#30417;&#21548;&#30331;&#24405;&#20135;&#29983;&#30340;&#25968;&#25454;&#10;[_LoginCommand.executionSignals.switchToLatest subscribeNext:^(id x) &#123;&#10; &#10;    if ([x isEqualToString:@&#34;&#30331;&#24405;&#25104;&#21151;&#34;]) &#123;&#10;        NSLog(@&#34;&#30331;&#24405;&#25104;&#21151;&#34;);&#10;    &#125;&#10;&#125;];</span><br></pre></td></tr></table></figure>
       
     </div>
     
