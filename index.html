@@ -241,6 +241,17 @@
 <p>如果为了进一步方便，再写一个脚本来检查当前环境是否准备好了hook脚本，并进行本地部署：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash&#10;&#10;if ![-f ./shell/pre-push]; then&#10;&#9;echo &#34;&#27809;&#26377;&#25214;&#21040;hook&#30340;&#33050;&#26412;&#25991;&#20214;&#34;&#10;&#9;exit(1)&#10;fi&#10;&#10;if [-f ./.git/hooks/pre-push.sample]; then&#10;&#9;rm ./.git/hooks/pre-push.sample&#10;fi&#10;&#10;cp  ./shell/pre-push ./.git/hooks/pre-push&#10;&#10;echo &#34;hook&#35774;&#32622;&#25104;&#21151;&#34;</span><br></pre></td></tr></table></figure>
 <p>每次有新人就让他手动调用一下这个脚本，最好的方式是希望能够将.git/hooks/下的脚本纳入git管理。暂时没有找到解决方案😫，或者部署在服务端，但是需要管理员权限。</p>
+<p>针对于上述问题，最后在同事提示下找到一个替换的方案。在Xcode的Build Phases中添加一个”Run Script”功能，在Xcode每次编译的时候都会执行这个脚本。</p>
+<p>首先setupHook.sh需要修改一下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash&#10;&#10;if [ -f ./shell/pre-push ]; then&#10;&#9;echo &#34;hook&#25991;&#20214;&#23384;&#22312;&#34;&#10;else&#10;&#9;echo &#34;hook&#25991;&#20214;&#19981;&#23384;&#22312;&#34;&#10;&#9;exit 1&#10;fi&#10;&#10;if [ -f ./.git/hooks/pre-push.sample ]; then&#10;&#9;rm ./.git/hooks/pre-push.sample&#10;fi&#10;&#10;if [ -f ./.git/hooks/pre-push ]; then&#10;&#9;echo &#34;hook&#24050;&#32463;&#35774;&#32622;&#36807;&#34;&#10;else&#10;&#9;echo &#34;hook&#26410;&#35774;&#32622;&#65292;&#24320;&#22987;&#35774;&#32622;&#34;&#10;&#9;cp  ./shell/pre-push ./.git/hooks/pre-push&#10;&#9;echo &#34;hook&#35774;&#32622;&#25104;&#21151;&#34;&#10;fi</span><br></pre></td></tr></table></figure>
+<p>然后再将setupHook.sh脚本添加进去如下所示：</p>
+<p><img src="http://7xqgnx.com1.z0.glb.clouddn.com/Run%20Script.png" alt="Run Script"></p>
+<p>还需要修改一下脚本执行权限，在cmd中执行：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod u+x setupHook.sh</span><br></pre></td></tr></table></figure>
+<p>再Build一下，最后会看到如下输出：</p>
+<p><img src="http://7xqgnx.com1.z0.glb.clouddn.com/log.png" alt="log"></p>
+<p>就说明设置生效了。</p>
+<p>这样一来，就不用太担心某个同学因为忘记设置hook脚本而提交代码没有触发脚本的问题了，因为提交代码之前不太可能不会Build代码，但是还是需要在README中显示的提醒一下，最后一步只是以防万一。</p>
 <h2 id="u53C2_u8003"><a href="#u53C2_u8003" class="headerlink" title="参考"></a>参考</h2><ul>
 <li><a href="https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90" target="_blank" rel="external">https://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90</a></li>
 <li><a href="http://www.cnblogs.com/MyEyes/archive/2012/01/12/2320529.html" target="_blank" rel="external">http://www.cnblogs.com/MyEyes/archive/2012/01/12/2320529.html</a></li>
