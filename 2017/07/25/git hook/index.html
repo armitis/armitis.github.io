@@ -4,21 +4,42 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>KVC集合操作符 | 美团MOMA团队</title>
+  <title>git hook | 美团MOMA团队</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="第一次遇到是在阅读AFNetworking中NSURLSession部分代码的时候：
-1- (NSArray *)tasksForKeyPath:(NSString *)keyPath &amp;#123;&amp;#10; &amp;#10;    __block NSArray *tasks = nil;&amp;#10; &amp;#10;    dispatch_semaphore_t semaphore = dispatch_">
+  <meta name="description" content="git hook 通过在代码commit和push之前执行一个脚本，来实现一些检查性工作😎。
+在.git/hooks目录下的脚本文件，默认情况下该目录下有以下文件
+applypatch-msg.sample 
+commit-msg:sample
+pre-applypatch.sample
+pre-commit.sample
+pre-push.sample
+pre-rebase.sample
+pr">
 <meta property="og:type" content="article">
-<meta property="og:title" content="KVC集合操作符">
-<meta property="og:url" content="http://yoursite.com/2016/01/25/KVC集合操作符/index.html">
+<meta property="og:title" content="git hook">
+<meta property="og:url" content="http://yoursite.com/2017/07/25/git hook/index.html">
 <meta property="og:site_name" content="美团MOMA团队">
-<meta property="og:description" content="第一次遇到是在阅读AFNetworking中NSURLSession部分代码的时候：
-1- (NSArray *)tasksForKeyPath:(NSString *)keyPath &amp;#123;&amp;#10; &amp;#10;    __block NSArray *tasks = nil;&amp;#10; &amp;#10;    dispatch_semaphore_t semaphore = dispatch_">
-<meta property="og:updated_time" content="2017-07-21T08:33:39.000Z">
+<meta property="og:description" content="git hook 通过在代码commit和push之前执行一个脚本，来实现一些检查性工作😎。
+在.git/hooks目录下的脚本文件，默认情况下该目录下有以下文件
+applypatch-msg.sample 
+commit-msg:sample
+pre-applypatch.sample
+pre-commit.sample
+pre-push.sample
+pre-rebase.sample
+pr">
+<meta property="og:updated_time" content="2017-07-25T08:28:22.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="KVC集合操作符">
-<meta name="twitter:description" content="第一次遇到是在阅读AFNetworking中NSURLSession部分代码的时候：
-1- (NSArray *)tasksForKeyPath:(NSString *)keyPath &amp;#123;&amp;#10; &amp;#10;    __block NSArray *tasks = nil;&amp;#10; &amp;#10;    dispatch_semaphore_t semaphore = dispatch_">
+<meta name="twitter:title" content="git hook">
+<meta name="twitter:description" content="git hook 通过在代码commit和push之前执行一个脚本，来实现一些检查性工作😎。
+在.git/hooks目录下的脚本文件，默认情况下该目录下有以下文件
+applypatch-msg.sample 
+commit-msg:sample
+pre-applypatch.sample
+pre-commit.sample
+pre-push.sample
+pre-rebase.sample
+pr">
   
     <link rel="alternative" href="/atom.xml" title="美团MOMA团队" type="application/atom+xml">
   
@@ -179,11 +200,11 @@
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-KVC集合操作符" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-git hook" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/01/25/KVC集合操作符/" class="article-date">
-  	<time datetime="2016-01-25T08:38:24.000Z" itemprop="datePublished">2016-01-25</time>
+      <a href="/2017/07/25/git hook/" class="article-date">
+  	<time datetime="2017-07-24T16:00:00.000Z" itemprop="datePublished">2017-07-25</time>
 </a>
     </div>
   
@@ -196,7 +217,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      KVC集合操作符
+      git hook
     </h1>
   
 
@@ -205,7 +226,7 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
 	</div>
 
         
@@ -220,27 +241,41 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>第一次遇到是在阅读AFNetworking中NSURLSession部分代码的时候：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (NSArray *)tasksForKeyPath:(NSString *)keyPath &#123;&#10; &#10;    __block NSArray *tasks = nil;&#10; &#10;    dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);&#10; &#10;    [self.session getTasksWithCompletionHandler:^(NSArray *dataTasks,&#10;     NSArray *uploadTasks, NSArray *downloadTasks) &#123;&#10; &#10;        if ([keyPath isEqualToString:NSStringFromSelector(@selector(dataTasks))&#10;        ]) &#123;&#10; &#10;            tasks = dataTasks;&#10; &#10;        &#125; else if ([keyPath isEqualToString:NSStringFromSelector(@selector(&#10;            uploadTasks))]) &#123;&#10; &#10;            tasks = uploadTasks;&#10; &#10;        &#125; else if ([keyPath isEqualToString:NSStringFromSelector(@selector(&#10;            downloadTasks))]) &#123;&#10; &#10;            tasks = downloadTasks;&#10; &#10;        &#125; else if ([keyPath isEqualToString:NSStringFromSelector(@selector(&#10;            tasks))]) &#123;&#10;             &#10;            //dataTasks, uploadTasks, downloadTasks &#37117;&#26159;&#25968;&#32452;&#65292;&#30456;&#24403;&#20110;&#25171;&#24179;&#25968;&#32452;&#65292;&#36820;&#22238;&#19968;&#20010;&#21253;&#21547;&#23376;&#25968;&#32452;&#21508;&#20803;&#32032;&#30340;&#25968;&#32452;&#12290;&#10;            tasks = [@[dataTasks, uploadTasks, downloadTasks] valueForKeyPath:&#10;            @&#34;@unionOfArrays.self&#34;];&#10;        &#125;&#10;        dispatch_semaphore_signal(semaphore);&#10;    &#125;];&#10;    dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);&#10;    return tasks;&#10; &#10;&#125;</span><br></pre></td></tr></table></figure>
-<p>KVC集合运算符允许以key path符号在一个集合中执行方法，以@开头表示一个特定的集合方法。键值编码会在必要的时候把基本数据类型进行装箱或者拆箱</p>
-<p>它主要分为3类：1.简单集合操作符 2.对象操作符 3.数组和集合操作符</p>
-<a id="more"></a> 
-<h2 id="u7B80_u5355_u96C6_u5408_u64CD_u4F5C_u7B26"><a href="#u7B80_u5355_u96C6_u5408_u64CD_u4F5C_u7B26" class="headerlink" title="简单集合操作符"></a>简单集合操作符</h2><p>返回string，number等</p>
-<p>@max/@min : 获得数组中最大(或者最小)的一个元素，元素内部要支持能够相互比较。这个好像只能是数值类型，系统并没有类似compare的方法，只有isEqual，但是并不是排序用的。</p>
-<p>@avg ： 将集合中对象转换成double类型，返回数组中指定的平均值的number对象</p>
-<p>@sum ：将集合中每个对象都转换成double类型，然后计算总和，最后返回一个值为这个总和的NSNumber对象</p>
-<p>@count：返回集合中对象总数的NSNumber对象</p>
-<p>例子：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[products valueForKeyPath:@&#34;@count&#34;];&#10;[products valueForKeyPath:@&#34;@sum.price&#34;];&#10;[products valueForKeyPath:@&#34;@avg.price&#34;];&#10;[products valueForKeyPath:@&#34;@max.price&#34;];&#10;[products valueForKeyPath:@&#34;@min.launchedOn&#34;];</span><br></pre></td></tr></table></figure>
-<h2 id="u5BF9_u8C61_u64CD_u4F5C_u7B26"><a href="#u5BF9_u8C61_u64CD_u4F5C_u7B26" class="headerlink" title="对象操作符"></a>对象操作符</h2><p>@unionOfObjects/@distincUnionOfObjects 返回一个由操作符右边的key path指定的对象属性组成的数组，distincUnionOfObjects会对数组去重。</p>
-<p>例子：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[inventory valueForKeyPath:@&#34;@unionOfObjects.name&#34;];&#10;[inventory valueForKeyPath:@&#34;@distinctUnionOfObjects.name&#34;];</span><br></pre></td></tr></table></figure>
-<p>数组和集合操作符</p>
-<p>@distinctUnionOfArrays/@unionOfArrays 返回一个数组，其中包含这个这个数组中每个子数组对于这个操作符号右边指定的key path进行操作之后的值。</p>
-<p>经常会使用 array unionOfArrays 来打平多维数组。</p>
-<p>@distinctUnionOfSets 和@distinctUnionOfArrays类似，因为NSSet中是没有重复的值，所以只有distinct操作</p>
-<p>利用这些操作，有时候可以避免无聊和重复的循环，代码也简洁了很多。</p>
-
+        <p>git hook 通过在代码commit和push之前执行一个脚本，来实现一些检查性工作😎。</p>
+<p>在.git/hooks目录下的脚本文件，默认情况下该目录下有以下文件</p>
+<p>applypatch-msg.sample </p>
+<p>commit-msg:sample</p>
+<p>pre-applypatch.sample</p>
+<p>pre-commit.sample</p>
+<p>pre-push.sample</p>
+<p>pre-rebase.sample</p>
+<p>prepare-commit-msg.sample</p>
+<hr>
+<p>update.sample</p>
+<p>pre-receive.sample</p>
+<p>post-update:sample</p>
+<p>分割线前面几种是客户端钩子，后面几种是服务端钩子</p>
+<p>pre-receive可以用来在服务端设置一些代码检查的功能，通过它可以拒绝一些不满足条件的push，无情的推行代</p>
+<p>码检查。</p>
+<p>post-receive它发生在push代码之后，可以通过CI来触发一些测试代码。</p>
+<p>若要相应的钩子生效，编辑脚本文件的内容，去掉.sample后缀即可。脚本若返回非0值，则相应的git操作不再</p>
+<p>往后执行。</p>
+<p>通过pre-push来举个🌰</p>
+<p>现在我想在每次push文件之时，检查项目中有没有重复图片，来减少不必要的包体积。假设检查重复图片的</p>
+<p>脚本叫做duplicate_image_detector.py</p>
+<p>现在通过客户端钩子来实现，因为./.git/hooks下的文件是无法通过git来进行管理，所以只能在客户端自己将</p>
+<p>hook脚本拷贝在./.git/hoos目录下了，hook脚本本身可以通过git来管理。</p>
+<p>hook脚本如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash&#10;# &#22270;&#29255;&#26816;&#27979;&#10;if [ ! -f &#34;./Checkers/duplicate_image_detector.py&#34; ]; then&#10;  echo &#34;&#26410;&#38598;&#25104;&#22270;&#29255;&#26816;&#27979;&#33050;&#26412;&#34;&#10;  exit 1&#10;fi</span><br></pre></td></tr></table></figure>
+<p>如果有多个任务需要处理，下一个任务需要在上一个任务成功之后再执行，则需要通过：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$? -eq 0</span><br></pre></td></tr></table></figure>
+<p>条件来判断上个任务是否以0结束，以0结束表示执行成功，反之返回非0就代表任务结束，不再继续执行了，整</p>
+<p>体类似：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#&#21069;&#32622;&#20219;&#21153;&#10;#./abc/xyz/xx.rb&#10;&#10;if [ $? -eq 0 ]; then&#10;&#9;echo &#34;***********xx.rb&#26816;&#27979;&#33050;&#26412;&#36890;&#36807;****************&#34;&#10;else&#10;&#9;echo &#34;***********xx.rb&#26816;&#27979;&#33050;&#26412;&#26410;&#36890;&#36807;****************&#34;&#10;&#9;exit 1&#10;fi&#10;&#10;# &#22270;&#29255;&#26816;&#27979;&#10;if [ ! -f &#34;./Checkers/duplicate_image_detector.py&#34; ]; then&#10;  echo &#34;&#26410;&#38598;&#25104;&#22270;&#29255;&#26816;&#27979;&#33050;&#26412;&#34;&#10;  exit 1&#10;fi</span><br></pre></td></tr></table></figure>
+<p>如果为了进一步方便，再写一个脚本来检查当前环境是否准备好了hook脚本，并进行本地部署：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash&#10;&#10;if ![-f ./shell/pre-push]; then&#10;&#9;echo &#34;&#27809;&#26377;&#25214;&#21040;hook&#30340;&#33050;&#26412;&#25991;&#20214;&#34;&#10;&#9;exit(1)&#10;fi&#10;&#10;if [-f ./.git/hooks/pre-push.sample]; then&#10;&#9;rm ./.git/hooks/pre-push.sample&#10;fi&#10;&#10;cp  ./shell/pre-push ./.git/hooks/pre-push&#10;&#10;echo &#34;hook&#35774;&#32622;&#25104;&#21151;&#34;</span><br></pre></td></tr></table></figure>
+<p>每次有新人就让他手动调用一下这个脚本，最好的方式是希望能够将.git/hooks/下的脚本纳入git管理。暂时没有找到解决方案😫，或者部署在服务端，但是需要管理员权限。</p>
+<h2 id="u53C2_u8003"><a href="#u53C2_u8003" class="headerlink" title="参考"></a>参考</h2>
       
     </div>
     
@@ -249,18 +284,9 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/01/25/AFNetworking源码解析1/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption"><</strong>
-      <div class="article-nav-title">
-        
-          AFNetworking源码解析1
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/01/25/Runloop相关探索/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Runloop相关探索</div>
+    <a href="/2017/07/21/Method Swizzle中的对象模型/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Method Swizzle中的对象模型</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -276,7 +302,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="KVC集合操作符" data-title="KVC集合操作符" data-url="http://yoursite.com/2016/01/25/KVC集合操作符/"></div>
+	<div class="ds-thread" data-thread-key="git hook" data-title="git hook" data-url="http://yoursite.com/2017/07/25/git hook/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

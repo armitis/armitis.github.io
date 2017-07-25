@@ -109,7 +109,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/RN/" style="font-size: 10px;">RN</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a>
+						<a href="/tags/RN/" style="font-size: 10px;">RN</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 10px;">hexo</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a>
 					</div>
 				</section>
 				
@@ -176,6 +176,100 @@
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-git hook" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/07/25/git hook/" class="article-date">
+  	<time datetime="2017-07-24T16:00:00.000Z" itemprop="datePublished">2017-07-25</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/25/git hook/">git hook</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>git hook 通过在代码commit和push之前执行一个脚本，来实现一些检查性工作😎。</p>
+<p>在.git/hooks目录下的脚本文件，默认情况下该目录下有以下文件</p>
+<p>applypatch-msg.sample </p>
+<p>commit-msg:sample</p>
+<p>pre-applypatch.sample</p>
+<p>pre-commit.sample</p>
+<p>pre-push.sample</p>
+<p>pre-rebase.sample</p>
+<p>prepare-commit-msg.sample</p>
+<hr>
+<p>update.sample</p>
+<p>pre-receive.sample</p>
+<p>post-update:sample</p>
+<p>分割线前面几种是客户端钩子，后面几种是服务端钩子</p>
+<p>pre-receive可以用来在服务端设置一些代码检查的功能，通过它可以拒绝一些不满足条件的push，无情的推行代</p>
+<p>码检查。</p>
+<p>post-receive它发生在push代码之后，可以通过CI来触发一些测试代码。</p>
+<p>若要相应的钩子生效，编辑脚本文件的内容，去掉.sample后缀即可。脚本若返回非0值，则相应的git操作不再</p>
+<p>往后执行。</p>
+<p>通过pre-push来举个🌰</p>
+<p>现在我想在每次push文件之时，检查项目中有没有重复图片，来减少不必要的包体积。假设检查重复图片的</p>
+<p>脚本叫做duplicate_image_detector.py</p>
+<p>现在通过客户端钩子来实现，因为./.git/hooks下的文件是无法通过git来进行管理，所以只能在客户端自己将</p>
+<p>hook脚本拷贝在./.git/hoos目录下了，hook脚本本身可以通过git来管理。</p>
+<p>hook脚本如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash&#10;# &#22270;&#29255;&#26816;&#27979;&#10;if [ ! -f &#34;./Checkers/duplicate_image_detector.py&#34; ]; then&#10;  echo &#34;&#26410;&#38598;&#25104;&#22270;&#29255;&#26816;&#27979;&#33050;&#26412;&#34;&#10;  exit 1&#10;fi</span><br></pre></td></tr></table></figure>
+<p>如果有多个任务需要处理，下一个任务需要在上一个任务成功之后再执行，则需要通过：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$? -eq 0</span><br></pre></td></tr></table></figure>
+<p>条件来判断上个任务是否以0结束，以0结束表示执行成功，反之返回非0就代表任务结束，不再继续执行了，整</p>
+<p>体类似：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#&#21069;&#32622;&#20219;&#21153;&#10;#./abc/xyz/xx.rb&#10;&#10;if [ $? -eq 0 ]; then&#10;&#9;echo &#34;***********xx.rb&#26816;&#27979;&#33050;&#26412;&#36890;&#36807;****************&#34;&#10;else&#10;&#9;echo &#34;***********xx.rb&#26816;&#27979;&#33050;&#26412;&#26410;&#36890;&#36807;****************&#34;&#10;&#9;exit 1&#10;fi&#10;&#10;# &#22270;&#29255;&#26816;&#27979;&#10;if [ ! -f &#34;./Checkers/duplicate_image_detector.py&#34; ]; then&#10;  echo &#34;&#26410;&#38598;&#25104;&#22270;&#29255;&#26816;&#27979;&#33050;&#26412;&#34;&#10;  exit 1&#10;fi</span><br></pre></td></tr></table></figure>
+<p>如果为了进一步方便，再写一个脚本来检查当前环境是否准备好了hook脚本，并进行本地部署：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash&#10;&#10;if ![-f ./shell/pre-push]; then&#10;&#9;echo &#34;&#27809;&#26377;&#25214;&#21040;hook&#30340;&#33050;&#26412;&#25991;&#20214;&#34;&#10;&#9;exit(1)&#10;fi&#10;&#10;if [-f ./.git/hooks/pre-push.sample]; then&#10;&#9;rm ./.git/hooks/pre-push.sample&#10;fi&#10;&#10;cp  ./shell/pre-push ./.git/hooks/pre-push&#10;&#10;echo &#34;hook&#35774;&#32622;&#25104;&#21151;&#34;</span><br></pre></td></tr></table></figure>
+<p>每次有新人就让他手动调用一下这个脚本，最好的方式是希望能够将.git/hooks/下的脚本纳入git管理。暂时没有找到解决方案😫，或者部署在服务端，但是需要管理员权限。</p>
+<h2 id="u53C2_u8003"><a href="#u53C2_u8003" class="headerlink" title="参考"></a>参考</h2>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/git/">git</a></li></ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/郑智文/">郑智文</a>
+	</div>
+
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-Method Swizzle中的对象模型" class="article article-type-post" itemscope itemprop="blogPost">
   
@@ -930,70 +1024,6 @@
       
         <p class="article-more-link">
           <a  href="/2016/01/25/Runloop和多线程/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-Autolayout和Frame" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/01/25/Autolayout和Frame/" class="article-date">
-  	<time datetime="2016-01-25T08:38:24.000Z" itemprop="datePublished">2016-01-25</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/25/Autolayout和Frame/">Autolayout和Frame</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p> 现在iOS页面布局用的最多的就是Frame和Autolayout，在Autolayout通过Masonry封装在实际使用中也十分方便。实际上，Autolayout的约束最后都是系统最终转化成frame来进行布局的，对与一个View来说，最终确定其中心点位置和View的宽高。当Autolayout和Frame设置上产生冲突的时候，则会以Autolayout的设置为准。这篇主要讨论布局中常用的几个方法和autolayout遇到动画的情形。</p>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
-	</div>
-
-      
-	<div class="article-category tagcloud">
-	<a class="article-category-link" href="/categories/郑智文/">郑智文</a>
-	</div>
-
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/01/25/Autolayout和Frame/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
