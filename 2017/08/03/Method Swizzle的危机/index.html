@@ -4,36 +4,27 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>美团MOMA团队</title>
+  <title>Method Swizzle的危机 | 美团MOMA团队</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="title: Method Swizzle的危机
-date: 2017-08-03 16:28:00
-categories: 郑智文
-tags: iOS在同时使用RAC和Aspects的时候，遇到了一个Crash，栈溢出了。
+  <meta name="description" content="在同时使用RAC和Aspects的时候，遇到了一个Crash，栈溢出了。
 看了一下，是之前在项目中使用了RAC的rac_singalForSelector
-1@weakify(self);&amp;#10;[[viewController rac_sign">
+1@weakify(self);&amp;#10;[[viewController rac_signalForSelector:@selector(viewDidAppear:)] subscribeNext&amp;#10;:^(id x) &amp;#123;&amp;#">
 <meta property="og:type" content="article">
-<meta property="og:title" content="美团MOMA团队">
-<meta property="og:url" content="http://yoursite.com/2017/08/04/Method Swizzle的危机/index.html">
+<meta property="og:title" content="Method Swizzle的危机">
+<meta property="og:url" content="http://yoursite.com/2017/08/03/Method Swizzle的危机/index.html">
 <meta property="og:site_name" content="美团MOMA团队">
-<meta property="og:description" content="title: Method Swizzle的危机
-date: 2017-08-03 16:28:00
-categories: 郑智文
-tags: iOS在同时使用RAC和Aspects的时候，遇到了一个Crash，栈溢出了。
+<meta property="og:description" content="在同时使用RAC和Aspects的时候，遇到了一个Crash，栈溢出了。
 看了一下，是之前在项目中使用了RAC的rac_singalForSelector
-1@weakify(self);&amp;#10;[[viewController rac_sign">
+1@weakify(self);&amp;#10;[[viewController rac_signalForSelector:@selector(viewDidAppear:)] subscribeNext&amp;#10;:^(id x) &amp;#123;&amp;#">
 <meta property="og:image" content="http://7xqgnx.com1.z0.glb.clouddn.com/RAC%20Swizzle%20Class.png">
 <meta property="og:image" content="http://7xqgnx.com1.z0.glb.clouddn.com/Aheater_Hook.png">
 <meta property="og:image" content="http://7xqgnx.com1.z0.glb.clouddn.com/RAC%20%E5%92%8C%20AHeater%20%E4%B8%80%E8%B5%B7Hook.png">
-<meta property="og:updated_time" content="2017-08-04T02:45:26.000Z">
+<meta property="og:updated_time" content="2017-08-07T02:40:07.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="美团MOMA团队">
-<meta name="twitter:description" content="title: Method Swizzle的危机
-date: 2017-08-03 16:28:00
-categories: 郑智文
-tags: iOS在同时使用RAC和Aspects的时候，遇到了一个Crash，栈溢出了。
+<meta name="twitter:title" content="Method Swizzle的危机">
+<meta name="twitter:description" content="在同时使用RAC和Aspects的时候，遇到了一个Crash，栈溢出了。
 看了一下，是之前在项目中使用了RAC的rac_singalForSelector
-1@weakify(self);&amp;#10;[[viewController rac_sign">
+1@weakify(self);&amp;#10;[[viewController rac_signalForSelector:@selector(viewDidAppear:)] subscribeNext&amp;#10;:^(id x) &amp;#123;&amp;#">
   
     <link rel="alternative" href="/atom.xml" title="美团MOMA团队" type="application/atom+xml">
   
@@ -201,8 +192,8 @@ tags: iOS在同时使用RAC和Aspects的时候，遇到了一个Crash，栈溢�
       <div class="body-wrap"><article id="post-Method Swizzle的危机" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/08/04/Method Swizzle的危机/" class="article-date">
-  	<time datetime="2017-08-04T03:00:38.000Z" itemprop="datePublished">2017-08-04</time>
+      <a href="/2017/08/03/Method Swizzle的危机/" class="article-date">
+  	<time datetime="2017-08-03T08:28:00.000Z" itemprop="datePublished">2017-08-03</time>
 </a>
     </div>
   
@@ -211,12 +202,35 @@ tags: iOS在同时使用RAC和Aspects的时候，遇到了一个Crash，栈溢�
       <input type="hidden" class="isFancy" />
     
     
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Method Swizzle的危机
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+	</div>
+
+        
+	<div class="article-category tagcloud">
+	<a class="article-category-link" href="/categories/郑智文/">郑智文</a>
+	</div>
+
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <p>title: Method Swizzle的危机</p>
-<p>date: 2017-08-03 16:28:00</p>
-<p>categories: 郑智文</p>
-<h2 id="tags_3A_iOS"><a href="#tags_3A_iOS" class="headerlink" title="tags: iOS"></a>tags: iOS</h2><p>在同时使用RAC和Aspects的时候，遇到了一个Crash，栈溢出了。</p>
+        <p>在同时使用RAC和Aspects的时候，遇到了一个Crash，栈溢出了。</p>
 <p>看了一下，是之前在项目中使用了RAC的rac_singalForSelector</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@weakify(self);&#10;[[viewController rac_signalForSelector:@selector(viewDidAppear:)] subscribeNext&#10;:^(id x) &#123;&#10;      @strongify(self);&#10;      self.shouldIgnorePushingViewControllers = NO;&#10;&#125;];</span><br></pre></td></tr></table></figure>
 <p>后来他又使用了Aspects库中的aspect_hookSelector</p>
@@ -292,7 +306,7 @@ tags: iOS在同时使用RAC和Aspects的时候，遇到了一个Crash，栈溢�
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="Method Swizzle的危机" data-title="" data-url="http://yoursite.com/2017/08/04/Method Swizzle的危机/"></div>
+	<div class="ds-thread" data-thread-key="Method Swizzle的危机" data-title="Method Swizzle的危机" data-url="http://yoursite.com/2017/08/03/Method Swizzle的危机/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
